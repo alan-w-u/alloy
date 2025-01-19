@@ -1,7 +1,5 @@
 import { getCompatibility } from './mbti'
 
-// query users based on inputs
-
 export function createGroupsByMbti(users, groupSize) {
     const groups = []
     const used = new Set()
@@ -54,16 +52,3 @@ export function createGroupsByMbti(users, groupSize) {
 
     return groups
 }
-
-const users = [
-    ['userA', 'INFJ'],
-    ['userB', 'ESTP'],
-    ['userC', 'ISFP'],
-    ['userD', 'ENTP'],
-    ['userE', 'ESFP'],
-    ['userF', 'ENTJ'],
-    ['userG', 'ISTJ']
-]
-
-const groups = createGroupsByMbti(users, 3)
-console.log('Groups:', groups)

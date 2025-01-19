@@ -19,12 +19,13 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      const data = await fetchFirebaseData('users', {
+      const data = await fetchFirebaseData('affiliations', {
         where: [
-          { field: 'email', operator: '==', value: 'joe@gmail.com' }
+          { field: 'group', operator: '==', value: 'ubc' }
         ]
       })
       setUserData(data)
+      console.log(userData)
       
       fetchFirebaseDataById('users', 'test_joe')
       fetchFirebaseDataByReference('users', 'test_joe', 'affiliations', 'user')
@@ -40,7 +41,7 @@ function App() {
       //   pronouns: "she/her",
       //   socials: {linkedin: 'linkedin_jamie', insta: 'ig_jamie', discord: 'jjames'},
       // })
-    })
+    })()
 
     const users = [
         ['userA', 'INFJ'],
