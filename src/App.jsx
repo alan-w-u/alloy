@@ -6,6 +6,7 @@ import {
   fetchFirebaseDataByReference,
   writeFirebaseData
 } from './firebase/firebaseCommands'
+import { fetchGoogleApiData } from './googleApi'
 import { getCompatibility } from './scripts/mbti'
 import { createGroupsByMbti } from './scripts/matcher'
 import Nav from './components/Nav'
@@ -19,6 +20,10 @@ function App() {
 
   useEffect(() => {
     (async () => {
+      // if (window.google) {
+      //   fetchGoogleApiData('golf')
+      // }
+
       const data = await fetchFirebaseData('users', {
         where: [
           { field: 'email', operator: '==', value: 'joe@gmail.com' }
