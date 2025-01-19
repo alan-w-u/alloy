@@ -217,11 +217,11 @@ const NewHangout = () => {
               <div>
                 <h2>{hangout.activity}</h2>
                 <p>{hangout.address}</p>
+                <p>☆ {hangout.rating}</p>
               </div>
               <div className="info">
                 <div>
                   <h3>{hangout.organization}</h3>
-                  <p>☆ {hangout.rating}</p>
                   <p>_________</p>
                   <ul className='group-members'>
                     {hangout.users.map((member, idx) => (
