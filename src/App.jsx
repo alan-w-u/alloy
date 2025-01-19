@@ -6,6 +6,7 @@ import {
   fetchFirebaseDataByReference
 } from './firebase/firebaseCommands'
 import { getCompatibility } from './scripts/mbti'
+import { createGroupsByMbti } from './scripts/matcher'
 import Nav from './components/Nav'
 import Home from './pages/Home'
 import Auth from './pages/Auth'
@@ -22,6 +23,17 @@ function App() {
     fetchFirebaseDataById('users', 'test_joe')
     fetchFirebaseDataByReference('users', 'test_joe', 'affiliations', 'user')
     console.log('MBTI compatibility for ESTJ: ', getCompatibility('ESTJ'))
+
+    const users = [
+        ['userA', 'INFJ'],
+        ['userB', 'ESTP'],
+        ['userC', 'ISFP'],
+        ['userD', 'ENTP'],
+        ['userE', 'ESFP'],
+        ['userF', 'ENTJ']
+    ]
+    console.log('Users: ', users)
+    console.log('Groups:', createGroupsByMbti(users, 3))
   }, [])
 
   return (
