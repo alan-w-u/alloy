@@ -1,5 +1,5 @@
 import { db } from './firebase'
-import { collection, query, where, orderBy, limit, getDoc, doc, getDocs, addDoc } from 'firebase/firestore'
+import { collection, query, where, orderBy, limit, getDoc, doc, getDocs, addDoc, deleteDoc, updateDoc } from 'firebase/firestore'
 
 /**
  * Fetches data from the Firestore collection with optional conditions
@@ -81,6 +81,31 @@ export async function writeFirebaseData(referenceTable, data) {
     console.log("Document written with ID: ", docRef.id)
     return docRef.id
   } catch (error) {
-    console.error("Error writing user data (writeFirebaseData): ", error)
+    console.error("Error writing data (writeFirebaseData): ", error)
+  }
+}
+
+export async function deleteFirebaseData(referenceTable, referenceId) {
+  try {
+    const docRef = doc(db, referenceTable, referenceId)
+    await deleteDoc(docRef)
+
+    console.log("Document deleted with ID: ", referenceId)
+    // return referenceId
+  } catch (error) {
+    console.error("Error deleting data (deleteFirebaseData): ", error)
+  }
+}
+
+export async function editFirebaseData(referenceTable, referenceId, field, newData) {
+  try {
+    const docRef = doc(db, referenceTable, referenceId)
+    await updateDoc(docRef, {
+      [field]: newData      
+    })
+
+    console.log("Edited Document with ID: ${referenceID}, ${referenceId: updatedData}")
+  } catch (error) {
+    console.error("Error Edited data (editFirebaseData): ", error)
   }
 }
