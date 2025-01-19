@@ -4,8 +4,10 @@ import { fetchFirebaseData, fetchFirebaseDataByReference } from "../firebase/fir
 
 const NewHangout = () => {
   const [isPopupVisible, setIsPopupVisible] = useState(false)
+  const [isSuccessful, setIsSuccessful] = useState(false)
   const [selectedGroup, setSelectedGroup] = useState('ubc')
   const [selectedSize, setSelectedSize] = useState(2)
+  const [groups, setGroups] = useState([])
 
   const handleButtonClick = () => {
     setIsPopupVisible(!isPopupVisible)
@@ -65,19 +67,28 @@ const NewHangout = () => {
       const users = extractNameAndMbti(userObjects)
       console.log("Creating new group... Users found: ", users)
 
-      const groupedUsers = createGroupsByMbti(users, selectedSize)
-      console.log("Creating new group... Groups formed: ", users)
-  
+      const groupedUsers = createGroupsByMbti(users, selectedSize)  
+      setGroups(groupedUsers)
       console.log("Groups created: ", groupedUsers)
-      setIsPopupVisible(false)
+      
     } catch (error) {
       console.error("Error fetching data or creating groups:", error)
     }
+
+    setIsPopupVisible(false)
+    setIsSuccessful(true)
+    setTimeout(() => {
+        setIsSuccessful(false);
+      }, 3000); 
   }
 
   return (
     <div>
-      <button onClick={handleButtonClick}>
+      <div className="created-groups">
+        { groups }
+      </div>
+        
+      <button className="create-button" onClick={handleButtonClick}>
         Create New Hangout
       </button>
 
@@ -109,9 +120,39 @@ const NewHangout = () => {
             </select>
 
             <button onClick={handleSubmit}>Create</button>
+            <button className="cancel-btn" onClick={() => setIsPopupVisible(false)}>
+              Cancel
+            </button>
           </div>
         </div>
       )}
+
+      {/* Success Popup */}
+      {isSuccessful && (
+        <div className="success-popup">
+          <div className="success-popup-content">
+            <div className="popup-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="50"
+                height="50"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="check-icon"
+              >
+                <path d="M20 6L9 17l-5-5"></path>
+              </svg>
+            </div>
+            <h3>Success!</h3>
+            <p>Your group has been created successfully.</p>
+          </div>
+        </div>
+      )}
+
     </div>
   )
 }
