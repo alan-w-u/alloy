@@ -4,7 +4,9 @@ import {
   fetchFirebaseData,
   fetchFirebaseDataById,
   fetchFirebaseDataByReference,
-  writeFirebaseData
+  writeFirebaseData,
+  deleteFirebaseData,
+  editFirebaseData
 } from './firebase/firebaseCommands'
 import {
   fetchGoogleApiData,
@@ -50,6 +52,9 @@ function App() {
       //   socials: {linkedin: 'linkedin_jamie', insta: 'ig_jamie', discord: 'jjames'},
       // })
     })()
+
+    // editFirebaseData("users", "test_steve", "socials.linkedin", "BigSteve")
+    // deleteFirebaseData("users", "1AjgUbxbGadZF54YZtqQ")
 
     const users = [
         ['userA', 'INFJ'],

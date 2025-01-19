@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { createGroupsByMbti } from '../scripts/matcher'
-import { fetchFirebaseData, writeFirebaseData } from '../firebase/firebaseCommands'
-import { fetchGoogleApiData, fetchGoogleApiDataById } from '../googleApi'
+import { fetchFirebaseData, writeFirebaseData, deleteFirebaseData } from '../firebase/firebaseCommands'
+import { fetchGoogleApiData, fetchGoogleApiDataById } from '../googleApi' 
 import '../styles/NewHangout.css'
 
 function NewHangout({ userData }) {
@@ -22,6 +22,11 @@ function NewHangout({ userData }) {
 
   const handleButtonClick = () => {
     setIsPopupVisible(!isPopupVisible)
+  }
+
+  const handleDeleteButtonClick = async (id) => {
+    await deleteFirebaseData("hangouts", id)
+    setHangouts((updatedHangouts) => updatedHangouts.filter((hangout) => hangout.id !== id));
   }
 
   const handleGroupChange = (event) => {
@@ -116,7 +121,7 @@ function NewHangout({ userData }) {
 
     const activity = determineActivity(userDataList)
     const actualActivity = await determineSpecificActivity(activity)
-    const actualActivityPhoto = actualActivity.photos[Math.floor(Math.random() * 10)].getUrl()
+    const actualActivityPhoto = actualActivity.photos[Math.floor(Math.random() * 8)].getUrl()
 
     console.log("actual activity: ", actualActivity)
 
@@ -195,12 +200,6 @@ function NewHangout({ userData }) {
     }, 3000);
   }
 
-  const fetchPhotoUrlFromId = (place_id) => {
-    const activity = fetchGoogleApiDataById(place_id)
-    const photo = actualActivity.photos[0]
-    return photo.getUrl
-  }
-
   return (
     <div className='new-hangout'>
       <h1 className='header'>Hangouts</h1>
@@ -208,14 +207,12 @@ function NewHangout({ userData }) {
         <div className='groups-list'>
           {hangouts.map((hangout, index) => (
             <div key={index} className='group'>
-              {/* <img
-                key={index}
-                src={fetchPhotoUrlFromId(hangout.id)} 
-                alt={`Photo of ${hangout.activity}`}
-                style={{ width: '300px', height: 'auto', margin: '10px' }} 
-              /> */}
               <div>
-                <h2>{hangout.activity}</h2>
+                <button className='delete-activity-button' onClick={() => {
+              handleDeleteButtonClick(hangout.id)}}>
+            X
+            </button>  
+            <h2>{hangout.activity}</h2>
                 <p>{hangout.address}</p>
                 <p>☆ {hangout.rating}</p>
               </div>
@@ -251,7 +248,6 @@ function NewHangout({ userData }) {
               value={selectedGroup}
               onChange={handleGroupChange}
             >
-              {/* TODO query values that user is admin to */}
               <option value='ubc'>ubc</option>
               <option value='nwPlus'>nwPlus</option>
               <option value='workday'>workday</option>
@@ -298,7 +294,7 @@ function NewHangout({ userData }) {
               </svg>
             </div>
             <h3>Success!</h3>
-            <p>Your group has been created successfully.</p>
+            <p>Hangouts have been created successfully :)</p>
           </div>
         </div>
       )}
