@@ -294,7 +294,7 @@ const NewHangout = () => {
               </svg>
             </div>
             <h3>Success!</h3>
-            <p>Your group has been created successfully.</p>
+            <p>Hangouts have been created successfully :)</p>
           </div>
         </div>
       )}
