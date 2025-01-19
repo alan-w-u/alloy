@@ -6,7 +6,10 @@ import {
   fetchFirebaseDataByReference,
   writeFirebaseData
 } from './firebase/firebaseCommands'
-import { fetchGoogleApiData } from './googleApi'
+import {
+  fetchGoogleApiData,
+  fetchGoogleApiDataById
+} from './googleApi'
 import { getCompatibility } from './scripts/mbti'
 import { createGroupsByMbti } from './scripts/matcher'
 import Nav from './components/Nav'
@@ -20,9 +23,10 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      // if (window.google) {
-      //   fetchGoogleApiData('bowling')
-      // }
+      if (window.google) {
+        // fetchGoogleApiData('bowling')
+        // fetchGoogleApiDataById('ChIJi82IoUhxhlQROLLcjD_L99I')
+      }
 
       const data = await fetchFirebaseData('users', {
         where: [

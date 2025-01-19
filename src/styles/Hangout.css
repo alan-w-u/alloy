@@ -1,0 +1,23 @@
+.hangout {
+  display: flex;
+  height: 100%;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.activity {
+  width: 30rem;
+  height: 40rem;
+  background-color: var(--moonstone);
+  border-radius: 3rem;
+  margin: 0 1rem;
+}
+
+.participants {
+  width: 20rem;
+  height: 40rem;
+  background-color: var(--moonstone);
+  border-radius: 3rem;
+  margin: 0 1rem;
+}
