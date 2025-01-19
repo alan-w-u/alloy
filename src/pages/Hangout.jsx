@@ -2,7 +2,9 @@ import '../styles/Hangout.css'
 
 function Hangout() {
   return (
-    <p>Hangout</p>
+    <div className="hangout">
+      <p>Auth</p>
+    </div>
   )
 }
 

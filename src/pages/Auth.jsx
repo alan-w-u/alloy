@@ -2,7 +2,9 @@ import '../styles/Auth.css'
 
 function Auth() {
   return (
-    <p>Auth</p>
+    <div className="auth">
+      <p>Auth</p>
+    </div>
   )
 }
 

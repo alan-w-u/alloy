@@ -1,3 +1,11 @@
 .nav {
+  display: flex;
+  height: 3rem;
   background-color: var(--moonstone);
+  align-items: center;
+}
+
+.nav h1 {
+  color: var(--seasalt);
+  margin: 0 1rem;
 }
