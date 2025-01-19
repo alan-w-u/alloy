@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { createGroupsByMbti } from '../scripts/matcher'
 import { fetchFirebaseData, writeFirebaseData } from '../firebase/firebaseCommands'
-import '../styles/NewHangout.css'
 import { fetchGoogleApiData, fetchGoogleApiDataById } from '../googleApi' 
+import '../styles/NewHangout.css'
 
 const NewHangout = () => {
   const [isPopupVisible, setIsPopupVisible] = useState(false)
@@ -11,6 +11,14 @@ const NewHangout = () => {
   const [selectedSize, setSelectedSize] = useState(2)
   const [groups, setGroups] = useState([])
   const [hangouts, setHangouts] = useState([])
+
+  useEffect(() => {
+    (async () => {
+      const data = await fetchFirebaseData('hangouts')
+      console.log('HANGOUTS DATA: ', data)
+      setHangouts(data)
+    })()
+  }, [])
 
   const handleButtonClick = () => {
     setIsPopupVisible(!isPopupVisible)
@@ -192,7 +200,7 @@ const NewHangout = () => {
 
   return (
     <div className='new-hangout'>
-      <h2 className='organization'>Upcoming hangouts</h2>
+      <h2 className='header'>Upcoming hangouts</h2>
       <div className='groups-container'>
       <div className='groups-list'>
         {hangouts.map((hangout, index) => (
@@ -205,7 +213,7 @@ const NewHangout = () => {
               /> */}
             <h2>{hangout.activity}</h2>
             <p>{hangout.address}</p>
-            <p>{hangout.organization}</p>
+            <h3>{hangout.organization}</h3>
             <p>_________</p>
             <ul className='group-members'>
               {hangout.users.map((member, idx) => (

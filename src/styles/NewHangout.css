@@ -2,10 +2,11 @@
 .new-hangout {
   display: flex;
   flex-direction: column;
+  max-height: 90%;
   margin: 0 auto;
 }
 
-.new-hangout .organization {
+.new-hangout .header {
   width: fit-content;
   padding: 0.5rem;
   border-radius: 0.5rem;
@@ -158,11 +159,13 @@ margin: 20rem auto;
 /* Groups Display Container */
 .groups-container {
   width: 40rem;
+  height: 50rem;
   padding: 20px;
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow-y: scroll;
 }
 
 /* Group List Styling */
