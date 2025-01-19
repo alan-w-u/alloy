@@ -1,5 +1,7 @@
 .home {
   display: flex;
-  height: 90%;
+  height: 95vh;
   align-items: center;
+  background-image: url("../assets/background.jpg");
+  background-size: cover;
 }
