@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { createGroupsByMbti } from '../scripts/matcher'
 import { fetchFirebaseData, writeFirebaseData } from '../firebase/firebaseCommands'
-import { fetchGoogleApiData, fetchGoogleApiDataById } from '../googleApi' 
+import { fetchGoogleApiData, fetchGoogleApiDataById } from '../googleApi'
 import '../styles/NewHangout.css'
 
 const NewHangout = () => {
@@ -38,7 +38,7 @@ const NewHangout = () => {
       const user = users[i][0];
       if (user) {
         console.log('Extracting info: ', user.name, user.mbti);
-        result.push([user.name, user.mbti]); 
+        result.push([user.name, user.mbti]);
       }
     }
     return result;
@@ -83,13 +83,13 @@ const NewHangout = () => {
 
   const determineSpecificActivity = async (activity) => {
     if (window.google) {
-        try {
-            const gapidata = await fetchGoogleApiData(activity)
-            console.log('gapidata: ', gapidata)
-            return fetchGoogleApiDataById(gapidata[0].place_id)
-        } catch (error) {
-            console.log(error)
-        }
+      try {
+        const gapidata = await fetchGoogleApiData(activity)
+        console.log('gapidata: ', gapidata)
+        return fetchGoogleApiDataById(gapidata[0].place_id)
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 
@@ -98,35 +98,37 @@ const NewHangout = () => {
     const userList = []
     const userDataList = []
     for (let key in group) {
-        userList.push(group[key])
+      userList.push(group[key])
     }
     for (let i = 0; i < userList.length; i++) {
-        const userData = await fetchFirebaseData('users', {
-            where: [
-                { field: 'name', operator: '==', value: userList[i] }
-            ]
-        })
-        mappedGroup[userList[i]] = userData
+      const userData = await fetchFirebaseData('users', {
+        where: [
+          { field: 'name', operator: '==', value: userList[i] }
+        ]
+      })
+      mappedGroup[userList[i]] = userData
     }
     for (let key in mappedGroup) {
-        userDataList.push(mappedGroup[key])
+      userDataList.push(mappedGroup[key])
     }
     console.log('mappedGroup!!!!: ', mappedGroup)
     console.log('userDataList!!!!: ', userDataList)
-    
+
     const activity = determineActivity(userDataList)
     const actualActivity = await determineSpecificActivity(activity)
+    const actualActivityPhoto = actualActivity.photos[Math.floor(Math.random() * 10)].getUrl()
 
     console.log("actual activity: ", actualActivity)
 
     const hangout = {
-        id: actualActivity.place_id,
-        category: activity,
-        activity: actualActivity.name,
-        address: actualActivity.formatted_address,
-        rating: actualActivity.rating,
-        organization: currentOrganization,
-        users: group
+      id: actualActivity.place_id,
+      category: activity,
+      activity: actualActivity.name,
+      address: actualActivity.formatted_address,
+      photo: actualActivityPhoto,
+      rating: actualActivity.rating,
+      organization: currentOrganization,
+      users: group
     }
 
     writeFirebaseData('hangouts', hangout)
@@ -137,17 +139,17 @@ const NewHangout = () => {
   const parseInputToUsers = async (affiliationObjects) => {
     const result = []
     try {
-        for (let i = 0; i < affiliationObjects.length; i++) {
-            const email = affiliationObjects[i].user
-            const user = await fetchFirebaseData('users', {
-                where: [
-                  { field: 'email', operator: '==', value: email }
-                ]
-              })
-            result.push(user)
-          }
+      for (let i = 0; i < affiliationObjects.length; i++) {
+        const email = affiliationObjects[i].user
+        const user = await fetchFirebaseData('users', {
+          where: [
+            { field: 'email', operator: '==', value: email }
+          ]
+        })
+        result.push(user)
+      }
     } catch (error) {
-        console.error('Error fetching data or parsing users:', error)
+      console.error('Error fetching data or parsing users:', error)
     }
     return result
   }
@@ -167,7 +169,7 @@ const NewHangout = () => {
       const users = extractInfoFromUsers(userObjects)
       console.log('Creating new group... Users found: ', users)
 
-      const groupedUsers = createGroupsByMbti(users, selectedSize)  
+      const groupedUsers = createGroupsByMbti(users, selectedSize)
       setGroups(groups.concat(groupedUsers))
       console.log('Groups created: ', groupedUsers)
 
@@ -175,13 +177,13 @@ const NewHangout = () => {
       for (let i = 0; i < groupedUsers.length; i++) {
         const hangout = await createHangoutByGroup(userObjects, groupedUsers[i], selectedGroup)
         newHangouts.push(hangout)
-      } 
+      }
 
       console.log('hangouts existing: ', hangouts)
       console.log('hangouts created: ', newHangouts)
-      
+
       setHangouts(hangouts.concat(newHangouts))
-      
+
     } catch (error) {
       console.error('Error fetching data or creating groups:', error)
     }
@@ -189,8 +191,8 @@ const NewHangout = () => {
     setIsPopupVisible(false)
     setIsSuccessful(true)
     setTimeout(() => {
-        setIsSuccessful(false);
-      }, 3000); 
+      setIsSuccessful(false);
+    }, 3000);
   }
 
   const fetchPhotoUrlFromId = (place_id) => {
@@ -203,37 +205,44 @@ const NewHangout = () => {
     <div className='new-hangout'>
       <h1 className='header'>Hangouts</h1>
       <div className='groups-container'>
-      <div className='groups-list'>
-        {hangouts.map((hangout, index) => (
-          <div key={index} className='group'>
-            {/* <img
+        <div className='groups-list'>
+          {hangouts.map((hangout, index) => (
+            <div key={index} className='group'>
+              {/* <img
                 key={index}
                 src={fetchPhotoUrlFromId(hangout.id)} 
                 alt={`Photo of ${hangout.activity}`}
                 style={{ width: '300px', height: 'auto', margin: '10px' }} 
               /> */}
-            <h2>{hangout.activity}</h2>
-            <p>{hangout.address}</p>
-            <h3>{hangout.organization}</h3>
-            <p>☆ {hangout.rating}</p>
-            <p>_________</p>
-            <ul className='group-members'>
-              {hangout.users.map((member, idx) => (
-                <li key={idx} className='group-member'>
-                  {member}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+              <div>
+                <h2>{hangout.activity}</h2>
+                <p>{hangout.address}</p>
+              </div>
+              <div className="info">
+                <div>
+                  <h3>{hangout.organization}</h3>
+                  <p>☆ {hangout.rating}</p>
+                  <p>_________</p>
+                  <ul className='group-members'>
+                    {hangout.users.map((member, idx) => (
+                      <li key={idx} className='group-member'>
+                        {member}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <img src={hangout.photo} alt={hangout.activity} className="photo" />
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
-        
-    <button className='create-button' onClick={handleButtonClick}>
-    Create New Hangout
-    </button>
 
-    {isPopupVisible && (
+      <button className='create-button' onClick={handleButtonClick}>
+        Create New Hangout
+      </button>
+
+      {isPopupVisible && (
         <div className='popup'>
           <div className='popup-content'>
             <label htmlFor='groupSelect'>Select Group:</label>
@@ -242,8 +251,8 @@ const NewHangout = () => {
               value={selectedGroup}
               onChange={handleGroupChange}
             >
-                {/* TODO query values that user is admin to */}
-              <option value='ubc'>ubc</option> 
+              {/* TODO query values that user is admin to */}
+              <option value='ubc'>ubc</option>
               <option value='nwPlus'>nwPlus</option>
               <option value='workday'>workday</option>
             </select>
@@ -266,10 +275,10 @@ const NewHangout = () => {
             </button>
           </div>
         </div>
-    )}
+      )}
 
-    {/* Success Popup */}
-    {isSuccessful && (
+      {/* Success Popup */}
+      {isSuccessful && (
         <div className='success-popup'>
           <div className='success-popup-content'>
             <div className='popup-icon'>
@@ -292,7 +301,7 @@ const NewHangout = () => {
             <p>Your group has been created successfully.</p>
           </div>
         </div>
-    )}
+      )}
 
     </div>
   )

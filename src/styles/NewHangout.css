@@ -29,6 +29,17 @@
   background-color: black;
 }
 
+.new-hangout .info {
+  display: flex;
+}
+
+.new-hangout .photo {
+  max-width: 8rem;
+  max-height: 8rem;
+  border-radius: 1rem;
+  margin: 0 0 0 auto;
+}
+
 .create-button {
   margin-top: 50px;
   margin-left: 25vw;
@@ -160,7 +171,7 @@ margin: 20rem auto;
 .groups-container {
   width: 40rem;
   height: 50rem;
-  padding: 20px;
+  padding: 0 2rem;
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
   border-radius: 8px;
@@ -176,7 +187,7 @@ margin: 20rem auto;
 .group {
   margin-bottom: 15px;
   background-color: #ffffff;
-  padding: 10px;
+  padding: 1.5rem 2rem;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
