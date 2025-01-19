@@ -1,34 +1,88 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { db } from './firebase'
+import { collection, query, where, orderBy, limit, getDoc, getDocs } from 'firebase/firestore'
+import Home from './pages/Home'
+import Auth from './pages/Auth'
+import Hangout from './pages/Hangout'
+import Profile from './pages/Profile'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  useEffect(() => {
+    fetchFirebaseData('users', {
+      where: [
+        { field: 'name', operator: '==', value: 'Joe Doe' }
+      ]
+    })
+  }, [])
+
+  /**
+   * Fetches data from the Firestore collection with optional conditions
+   * 
+   * @param {string} table - Name of the Firestore collection to query
+   * @param {Object} [options = {}] - The conditions to customize the query
+   * @param {Array} [options.where] - where: [{ field: string, operator: string, value: any }, ...]
+   * @param {Array} [options.orderBy] - orderBy: [{ field: string, direction: string }, ...]
+   * @param {number} [options.limit] - limit: number
+   * 
+   * @returns {Promise<Object|null>}
+   */
+  const fetchFirebaseData = async (table, options = {}) => {
+    try {
+      let q = query(collection(db, table))
+
+      if (options.where) {
+        options.where.forEach(condition => {
+          const { field, operator, value } = condition 
+          q = query(q, where(field, operator, value))
+        })
+      }
+
+      if (options.orderBy) {
+        options.orderBy.forEach(condition => {
+          const { field, direction } = condition 
+          q = query(q, orderBy(field, direction))
+        })
+      }
+
+      if (options.limit) {
+        q = query(q, limit(options.limit))
+      }
+
+      const querySnapshot = await getDocs(q)
+      const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+      console.log(data)
+      return data
+    } catch (error) {
+      console.error('Error fetching Firestore data: ', error)
+    }
+  }
+
+  const fetchFirebaseDataById = async (table, id) => {
+    try {
+      const doc = doc(db, table, id)
+      const docSnapshot = await getDoc(doc)
+  
+      if (docSnapshot.exists()) {
+        return { id: docSnapshot.id, ...docSnapshot.data() }
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.error('Error fetching Firestore data: ', error)
+    }
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <Router>
+      <Routes>
+        <Route exact path="/" element={<Home />} />
+        <Route exact path="/auth" element={<Auth />} />
+        <Route exact path="/hangout" element={<Hangout />} />
+        <Route exact path="/profile" element={<Profile />} />
+      </Routes>
+    </Router>
   )
 }
 
