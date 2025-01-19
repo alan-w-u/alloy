@@ -1,0 +1,22 @@
+.profile {
+  display: flex;
+  flex-direction: column;
+  width: 20rem;
+  height: 45rem;
+  margin: 0 1rem 0 auto;
+  background-color: var(--moonstone);
+  border-radius: 3rem;
+  color: var(--seasalt);
+  align-items: center;
+}
+
+.profile h1 {
+  margin: 1rem 0;
+}
+
+.profile .picture {
+  width: 10rem;
+  height: 10rem;
+  background-color: var(--dim-grey);
+  border-radius: 100%;
+}
