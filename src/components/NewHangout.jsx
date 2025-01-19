@@ -191,8 +191,8 @@ const NewHangout = () => {
 
   return (
     <div className='new-hangout'>
+      <h2 className='organization'>Upcoming hangouts</h2>
       <div className='groups-container'>
-      <h2>Upcoming hangouts</h2>
       <div className='groups-list'>
         {hangouts.map((hangout, index) => (
           <div key={index} className='group'>

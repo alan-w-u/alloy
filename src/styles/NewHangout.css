@@ -5,6 +5,14 @@
   margin: 0 auto;
 }
 
+.new-hangout .organization {
+  width: fit-content;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  margin: 1rem auto;
+  background-color: var(--columbia-blue);
+}
+
 .new-hangout button {
   margin: 10px;
   padding: 10px 20px;
@@ -149,6 +157,7 @@ margin: 20rem auto;
 
 /* Groups Display Container */
 .groups-container {
+  width: 40rem;
   padding: 20px;
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;

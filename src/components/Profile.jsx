@@ -1,3 +1,4 @@
+import placeholderprofile from '../assets/placeholder-profile.jpg'
 import mail from '../assets/mail.png'
 import location from '../assets/location.png'
 import instagram from '../assets/instagram.png'
@@ -10,7 +11,7 @@ function Profile({ userData }) {
     <div className="profile">
       <h1>{userData.name}</h1>
       <h3>[{userData.pronouns}]</h3>
-      <div className="picture" />
+      <img src={placeholderprofile} alt="placeholder-profile" className="picture"></img>
       <div className="info">
         <div className="cell">
           <img src={mail} alt="mail"></img>
@@ -32,9 +33,10 @@ function Profile({ userData }) {
           <img src={discord} alt="discord"></img>
           <h3>{userData.socials.discord}</h3>
         </div>
-        <h3>{userData.interests[0]}</h3>
-        <h3>{userData.interests[1]}</h3>
-        <h3>{userData.interests[2]}</h3>
+        <div className="activities">
+          <h2>Favourite Activities</h2>
+          <h3>{userData.interests[0]}, {userData.interests[1]}, {userData.interests[2]}</h3>
+        </div>
       </div>
     </div>
   )
