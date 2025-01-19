@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { db } from './firebase'
-import { collection, query, where, orderBy, limit, getDoc, getDocs } from 'firebase/firestore'
+import { collection, query, where, orderBy, limit, getDoc, doc, getDocs } from 'firebase/firestore'
+import Nav from './pages/Nav'
 import Home from './pages/Home'
 import Auth from './pages/Auth'
 import Hangout from './pages/Hangout'
@@ -15,6 +16,8 @@ function App() {
         { field: 'name', operator: '==', value: 'Joe Doe' }
       ]
     })
+    fetchFirebaseDataById('users', 'test_joe')
+    fetchFirebaseDataByReference('users', 'test_joe', 'affiliations', 'user')
   }, [])
 
   /**
@@ -28,7 +31,7 @@ function App() {
    * 
    * @returns {Promise<Object|null>}
    */
-  const fetchFirebaseData = async (table, options = {}) => {
+  async function fetchFirebaseData(table, options = {}) {
     try {
       let q = query(collection(db, table))
 
@@ -52,30 +55,46 @@ function App() {
 
       const querySnapshot = await getDocs(q)
       const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
-      console.log(data)
+      console.log('fetchFirebaseData: ', data)
       return data
     } catch (error) {
-      console.error('Error fetching Firestore data: ', error)
+      console.error('Error fetching Firestore data (fetchFirebaseData): ', error)
     }
   }
 
-  const fetchFirebaseDataById = async (table, id) => {
+  async function fetchFirebaseDataById(table, id) {
     try {
-      const doc = doc(db, table, id)
-      const docSnapshot = await getDoc(doc)
+      const ref = doc(db, table, id)
+      const docSnapshot = await getDoc(ref)
   
       if (docSnapshot.exists()) {
-        return { id: docSnapshot.id, ...docSnapshot.data() }
+        const data = { id: docSnapshot.id, ...docSnapshot.data() }
+        console.log('fetchFirebaseDataById: ', data)
+        return data
       } else {
-        return null;
+        return null
       }
     } catch (error) {
-      console.error('Error fetching Firestore data: ', error)
+      console.error('Error fetching Firestore data (fetchFirebaseDataById): ', error)
+    }
+  }
+
+  async function fetchFirebaseDataByReference(referenceTable, referenceId, table, field) {
+    try {
+      const ref = doc(db, referenceTable, referenceId)
+      const q = query(collection(db, table), where(field, '==', ref))
+      const querySnapshot = await getDocs(q)
+      const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+      console.log('fetchFirebaseDataByReference: ', data)
+      return data
+    } catch (error) {
+      console.error("Error fetching Firestore data (fetchFirebaseDataByReference): ", error)
     }
   }
 
   return (
     <Router>
+      <Nav />
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/auth" element={<Auth />} />
