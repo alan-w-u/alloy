@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { createGroupsByMbti } from '../scripts/matcher'
 import { fetchFirebaseData, fetchFirebaseDataByReference } from '../firebase/firebaseCommands'
 import '../styles/NewHangout.css'
+import { fetchGoogleApiData, fetchGoogleApiDataById } from '../googleApi' 
 
 const NewHangout = () => {
   const [isPopupVisible, setIsPopupVisible] = useState(false)
@@ -72,6 +73,18 @@ const NewHangout = () => {
     return mostFrequentInterest;
   }
 
+  const determineSpecificActivity = async (activity) => {
+    if (window.google) {
+        try {
+            const gapidata = await fetchGoogleApiData(activity)
+            console.log('gapidata: ', gapidata)
+            fetchGoogleApiDataById(gapidata[0].place_id)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+  }
+
   const createHangoutByGroup = async (userObjects, group) => {
     const mappedGroup = {}
     const userList = []
@@ -92,11 +105,9 @@ const NewHangout = () => {
     }
     console.log('mappedGroup!!!!: ', mappedGroup)
     console.log('userDataList!!!!: ', userDataList)
-
-
-    console.log("type of group ", typeof(group))
     
-    determineActivity(userDataList)
+    const activity = determineActivity(userDataList)
+    const actualActivity = determineSpecificActivity(activity)
   }
 
   const parseInputToUsers = async (affiliationObjects) => {
