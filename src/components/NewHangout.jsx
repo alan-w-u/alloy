@@ -85,7 +85,7 @@ const NewHangout = () => {
     }
   }
 
-  const createHangoutByGroup = async (userObjects, group) => {
+  const createHangoutByGroup = async (userObjects, group, currentOrganization) => {
     const mappedGroup = {}
     const userList = []
     const userDataList = []
@@ -116,6 +116,7 @@ const NewHangout = () => {
         activity: actualActivity.name,
         address: actualActivity.formatted_address,
         rating: actualActivity.rating,
+        organization: currentOrganization,
         users: group
     }
 
@@ -163,7 +164,7 @@ const NewHangout = () => {
 
       const newHangouts = []
       for (let i = 0; i < groupedUsers.length; i++) {
-        const hangout = await createHangoutByGroup(userObjects, groupedUsers[i])
+        const hangout = await createHangoutByGroup(userObjects, groupedUsers[i], selectedGroup)
         newHangouts.push(hangout)
       } 
 
@@ -204,6 +205,7 @@ const NewHangout = () => {
               /> */}
             <h2>{hangout.activity}</h2>
             <p>{hangout.address}</p>
+            <p>{hangout.organization}</p>
             <p>_________</p>
             <ul className='group-members'>
               {hangout.users.map((member, idx) => (

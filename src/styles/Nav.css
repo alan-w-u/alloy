@@ -1,7 +1,7 @@
 .nav {
   display: flex;
   height: 3rem;
-  background-color: var(--moonstone);
+  background-color: #373F51;
   align-items: center;
 }
 
