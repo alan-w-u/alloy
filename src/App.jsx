@@ -19,7 +19,7 @@ function App() {
     })
     fetchFirebaseDataById('users', 'test_joe')
     fetchFirebaseDataByReference('users', 'test_joe', 'affiliations', 'user')
-    console.log('MBTI:', getCompatibility('ISTJ'))
+    console.log('MBTI compatibility for ESTJ: ', getCompatibility('ESTJ'))
   }, [])
 
   /**
