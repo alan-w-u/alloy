@@ -208,12 +208,6 @@ const NewHangout = () => {
         <div className='groups-list'>
           {hangouts.map((hangout, index) => (
             <div key={index} className='group'>
-              {/* <img
-                key={index}
-                src={fetchPhotoUrlFromId(hangout.id)} 
-                alt={`Photo of ${hangout.activity}`}
-                style={{ width: '300px', height: 'auto', margin: '10px' }} 
-              /> */}
               <div>
                 <h2>{hangout.activity}</h2>
                 <p>{hangout.address}</p>

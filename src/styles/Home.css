@@ -1,7 +1,7 @@
 .home {
-  display: flex;
-  height: 95vh;
-  align-items: center;
-  background-image: url("../assets/background.jpg");
-  background-size: cover;
+    display: flex;
+    height: 95vh;
+    align-items: center;
+    background-image: url("../assets/background.jpg");
+    background-size: cover;
 }
