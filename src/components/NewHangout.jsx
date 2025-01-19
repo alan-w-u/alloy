@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { createGroupsByMbti } from '../scripts/matcher'
-import { fetchFirebaseData, fetchFirebaseDataByReference } from '../firebase/firebaseCommands'
+import { fetchFirebaseData, writeFirebaseData } from '../firebase/firebaseCommands'
 import '../styles/NewHangout.css'
 import { fetchGoogleApiData, fetchGoogleApiDataById } from '../googleApi' 
 
@@ -78,7 +78,7 @@ const NewHangout = () => {
         try {
             const gapidata = await fetchGoogleApiData(activity)
             console.log('gapidata: ', gapidata)
-            fetchGoogleApiDataById(gapidata[0].place_id)
+            return fetchGoogleApiDataById(gapidata[0].place_id)
         } catch (error) {
             console.log(error)
         }
@@ -107,7 +107,15 @@ const NewHangout = () => {
     console.log('userDataList!!!!: ', userDataList)
     
     const activity = determineActivity(userDataList)
-    const actualActivity = determineSpecificActivity(activity)
+    const actualActivity = await determineSpecificActivity(activity)
+
+    console.log("actual activity: ", actualActivity)
+
+    // store in db
+    writeFirebaseData('hangouts', {
+        activity: actualActivity.place_id,
+        users: group
+    })
   }
 
   const parseInputToUsers = async (affiliationObjects) => {
@@ -144,8 +152,7 @@ const NewHangout = () => {
       console.log('Creating new group... Users found: ', users)
 
       const groupedUsers = createGroupsByMbti(users, selectedSize)  
-      setGroups(groups.concat(groupedUsers)) // this doesn't actually work bc groups is an object
-
+      setGroups(groups.concat(groupedUsers))
       console.log('Groups created: ', groupedUsers)
 
       const newHangouts = []
