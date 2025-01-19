@@ -1,5 +1,5 @@
 import { db } from './firebase'
-import { collection, query, where, orderBy, limit, getDoc, doc, getDocs } from 'firebase/firestore'
+import { collection, query, where, orderBy, limit, getDoc, doc, getDocs, addDoc } from 'firebase/firestore'
 
 /**
  * Fetches data from the Firestore collection with optional conditions
@@ -70,5 +70,17 @@ export async function fetchFirebaseDataByReference(referenceTable, referenceId, 
     return data
   } catch (error) {
     console.error("Error fetching Firestore data (fetchFirebaseDataByReference): ", error)
+  }
+}
+
+export async function writeFirebaseData(referenceTable, data) {
+  try {
+    const tableRef = collection(db, referenceTable)
+    const docRef = await addDoc(tableRef, data)
+
+    console.log("Document written with ID: ", docRef.id)
+    return docRef.id
+  } catch (error) {
+    console.error("Error writing user data (writeFirebaseData): ", error)
   }
 }
