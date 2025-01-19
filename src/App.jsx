@@ -7,6 +7,7 @@ import {
   writeFirebaseData
 } from './firebase/firebaseCommands'
 import { getCompatibility } from './scripts/mbti'
+import { createGroupsByMbti } from './scripts/matcher'
 import Nav from './components/Nav'
 import Home from './pages/Home'
 import Auth from './pages/Auth'
@@ -34,6 +35,17 @@ function App() {
       pronouns: "she/her",
       socials: {linkedin: 'linkedin_jamie', insta: 'ig_jamie', discord: 'jjames'},
     })
+
+    const users = [
+        ['userA', 'INFJ'],
+        ['userB', 'ESTP'],
+        ['userC', 'ISFP'],
+        ['userD', 'ENTP'],
+        ['userE', 'ESFP'],
+        ['userF', 'ENTJ']
+    ]
+    console.log('Users: ', users)
+    console.log('Groups:', createGroupsByMbti(users, 3))
   }, [])
 
   return (
