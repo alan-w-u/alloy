@@ -121,6 +121,7 @@ const NewHangout = () => {
 
     const hangout = {
         id: actualActivity.place_id,
+        category: activity,
         activity: actualActivity.name,
         address: actualActivity.formatted_address,
         rating: actualActivity.rating,
@@ -200,7 +201,7 @@ const NewHangout = () => {
 
   return (
     <div className='new-hangout'>
-      <h2 className='header'>Upcoming hangouts</h2>
+      <h1 className='header'>Hangouts</h1>
       <div className='groups-container'>
       <div className='groups-list'>
         {hangouts.map((hangout, index) => (
@@ -214,6 +215,7 @@ const NewHangout = () => {
             <h2>{hangout.activity}</h2>
             <p>{hangout.address}</p>
             <h3>{hangout.organization}</h3>
+            <p>☆ {hangout.rating}</p>
             <p>_________</p>
             <ul className='group-members'>
               {hangout.users.map((member, idx) => (

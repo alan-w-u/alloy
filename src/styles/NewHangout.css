@@ -8,7 +8,7 @@
 
 .new-hangout .header {
   width: fit-content;
-  padding: 0.5rem;
+  padding: 1.1rem;
   border-radius: 0.5rem;
   margin: 1rem auto;
   background-color: var(--columbia-blue);
@@ -182,9 +182,9 @@ margin: 20rem auto;
 }
 
 .group h3 {
+  margin-top: 5px;
   font-size: 18px;
   color: #333;
-  margin-bottom: 10px;
 }
 
 .group-members {
