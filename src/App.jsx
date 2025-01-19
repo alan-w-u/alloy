@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { db } from './firebase'
 import { collection, query, where, orderBy, limit, getDoc, doc, getDocs } from 'firebase/firestore'
+import { getCompatibility } from './scripts/mbti'
 import Nav from './components/Nav'
 import Home from './pages/Home'
 import Auth from './pages/Auth'
@@ -18,6 +19,7 @@ function App() {
     })
     fetchFirebaseDataById('users', 'test_joe')
     fetchFirebaseDataByReference('users', 'test_joe', 'affiliations', 'user')
+    console.log('MBTI:', getCompatibility('ISTJ'))
   }, [])
 
   /**
