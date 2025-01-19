@@ -8,6 +8,12 @@ body {
     font-family: Arial, sans-serif;
 }
 
+.main-hangout-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 15rem;
+}
+
 button {
     margin: 10px;
     padding: 10px 20px;
@@ -20,6 +26,7 @@ button {
 }
 
 .create-button {
+    margin-top: 50px;
     margin-left: 25vw;
 }
 
@@ -147,6 +154,50 @@ select {
   
   .cancel-btn:hover {
     background-color: #e0e0e0;
+  }
+
+  /* Groups Display Container */
+.groups-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Group List Styling */
+  .groups-list {
+    margin-top: 20px;
+  }
+  
+  .group {
+    margin-bottom: 15px;
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .group h3 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .group-members {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  .group-member {
+    font-size: 16px;
+    color: #555;
+    margin: 5px 0;
+  }
+  
+  /* Optional: Styling for Hover Effects */
+  .group-member:hover {
+    color: #3498db;
   }
   
   /* Animations */

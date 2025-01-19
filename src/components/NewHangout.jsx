@@ -68,7 +68,7 @@ const NewHangout = () => {
       console.log("Creating new group... Users found: ", users)
 
       const groupedUsers = createGroupsByMbti(users, selectedSize)  
-      setGroups(groupedUsers)
+      setGroups(groups.concat(groupedUsers))
       console.log("Groups created: ", groupedUsers)
       
     } catch (error) {
@@ -83,16 +83,30 @@ const NewHangout = () => {
   }
 
   return (
-    <div>
-      <div className="created-groups">
-        { groups }
+    <div className="main-hangout-container">
+      <div className="groups-container">
+      <h2>Upcoming hangouts</h2>
+      <div className="groups-list">
+        {groups.map((group, index) => (
+          <div key={index} className="group">
+            <h3>{selectedGroup} {index + 1}</h3>
+            <ul className="group-members">
+              {group.map((member, idx) => (
+                <li key={idx} className="group-member">
+                  {member}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
+    </div>
         
-      <button className="create-button" onClick={handleButtonClick}>
-        Create New Hangout
-      </button>
+    <button className="create-button" onClick={handleButtonClick}>
+    Create New Hangout
+    </button>
 
-      {isPopupVisible && (
+    {isPopupVisible && (
         <div className="popup">
           <div className="popup-content">
             <label htmlFor="groupSelect">Select Group:</label>
@@ -116,7 +130,7 @@ const NewHangout = () => {
               <option value="2">2</option>
               <option value="3">3</option>
               <option value="4">4</option>
-              <option value="5">4</option>
+              <option value="5">5</option>
             </select>
 
             <button onClick={handleSubmit}>Create</button>
@@ -125,10 +139,10 @@ const NewHangout = () => {
             </button>
           </div>
         </div>
-      )}
+    )}
 
-      {/* Success Popup */}
-      {isSuccessful && (
+    {/* Success Popup */}
+    {isSuccessful && (
         <div className="success-popup">
           <div className="success-popup-content">
             <div className="popup-icon">
@@ -151,7 +165,7 @@ const NewHangout = () => {
             <p>Your group has been created successfully.</p>
           </div>
         </div>
-      )}
+    )}
 
     </div>
   )
