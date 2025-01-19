@@ -34,6 +34,10 @@
   margin-left: 25vw;
 }
 
+.delete-activity-button {
+  float: right;
+}
+
 label {
   font-size: 20px;
   font-weight: bold;

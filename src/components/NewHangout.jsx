@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { createGroupsByMbti } from '../scripts/matcher'
-import { fetchFirebaseData, writeFirebaseData } from '../firebase/firebaseCommands'
+import { fetchFirebaseData, writeFirebaseData, deleteFirebaseData } from '../firebase/firebaseCommands'
 import { fetchGoogleApiData, fetchGoogleApiDataById } from '../googleApi' 
 import '../styles/NewHangout.css'
 
@@ -22,6 +22,10 @@ const NewHangout = () => {
 
   const handleButtonClick = () => {
     setIsPopupVisible(!isPopupVisible)
+  }
+
+  const handleDeleteButtonClick = (id) => {
+    deleteFirebaseData("hangouts", "id", id)
   }
 
   const handleGroupChange = (event) => {
@@ -192,12 +196,6 @@ const NewHangout = () => {
       }, 3000); 
   }
 
-  const fetchPhotoUrlFromId = (place_id) => {
-    const activity = fetchGoogleApiDataById(place_id)
-    const photo = actualActivity.photos[0]
-    return photo.getUrl
-  }
-
   return (
     <div className='new-hangout'>
       <h2 className='header'>Upcoming hangouts</h2>
@@ -211,6 +209,10 @@ const NewHangout = () => {
                 alt={`Photo of ${hangout.activity}`}
                 style={{ width: '300px', height: 'auto', margin: '10px' }} 
               /> */}
+            <button className='delete-activity-button' onClick={() => {
+              handleDeleteButtonClick(hangout.id)}}>
+            X
+            </button>  
             <h2>{hangout.activity}</h2>
             <p>{hangout.address}</p>
             <h3>{hangout.organization}</h3>
