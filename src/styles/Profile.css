@@ -3,6 +3,7 @@
   flex-direction: column;
   width: 20rem;
   height: 45rem;
+  padding: 1rem;
   margin: 0 1rem 0 auto;
   background-color: var(--moonstone);
   border-radius: 3rem;
@@ -10,8 +11,8 @@
   align-items: center;
 }
 
-.profile h1 {
-  margin: 1rem 0;
+.profile h3 {
+  margin: 0.5rem 0;
 }
 
 .profile .picture {

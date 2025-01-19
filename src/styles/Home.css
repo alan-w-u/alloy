@@ -48,3 +48,10 @@ button:hover {
 select {
     margin: 10px 0;
 }
+
+.loading {
+  width: fit-content;
+  font-size: 5rem;
+  font-weight: bold;
+  margin: 20rem auto;
+}

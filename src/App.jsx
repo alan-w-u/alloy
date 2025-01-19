@@ -25,8 +25,7 @@ function App() {
         ]
       })
       setUserData(data)
-      console.log(userData)
-      
+
       fetchFirebaseDataById('users', 'test_joe')
       fetchFirebaseDataByReference('users', 'test_joe', 'affiliations', 'user')
       console.log('MBTI compatibility for ESTJ: ', getCompatibility('ESTJ'))
@@ -59,7 +58,7 @@ function App() {
     <Router>
       <Nav />
       <Routes>
-        <Route exact path="/" element={<Home />} />
+        <Route exact path="/" element={<Home userData={userData} />} />
         <Route exact path="/auth" element={<Auth />} />
         <Route exact path="/hangout" element={<Hangout />} />
       </Routes>
