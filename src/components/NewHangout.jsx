@@ -44,16 +44,21 @@ const NewHangout = () => {
 //   }
 
   const determineActivity = (userObjects) => {
-    const allInterests = [];
+    const allInterests = []
 
     for (let i = 0; i < userObjects.length; i++) {
-        const user = userObjects[i][0];
-        if (user) {
-        //   const interestsArray = extractInterests(user.interests)
-          console.log('Extracting interests: ', user.interests);
-          allInterests.concat(user.interests); 
+      const user = userObjects[i][0];
+      if (user) {
+        for (let key in user.interests) {
+          allInterests.push(user.interests[key])
         }
+      //   const interestsArray = extractInterests(user.interests)
+        // console.log('Extracting interests: ', user.interests);
+        // allInterests.concat(user.interests); 
+      }
     }
+
+    console.log('allInterests: ', allInterests)
 
     const interestCount = {};
     console.log(allInterests)
