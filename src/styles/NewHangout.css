@@ -8,7 +8,7 @@
 
 .new-hangout .header {
   width: fit-content;
-  padding: 0.5rem;
+  padding: 1.1rem;
   border-radius: 0.5rem;
   margin: 1rem auto;
   background-color: var(--columbia-blue);
@@ -26,7 +26,18 @@
 }
 
 .new-hangout button:hover {
-  background-color: black;
+  background-color: #34373d;
+}
+
+.new-hangout .info {
+  display: flex;
+}
+
+.new-hangout .photo {
+  max-width: 8rem;
+  max-height: 8rem;
+  border-radius: 1rem;
+  margin: 0 0 0 auto;
 }
 
 .create-button {
@@ -164,7 +175,7 @@ margin: 20rem auto;
 .groups-container {
   width: 40rem;
   height: 50rem;
-  padding: 20px;
+  padding: 0 2rem;
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
   border-radius: 8px;
@@ -180,15 +191,15 @@ margin: 20rem auto;
 .group {
   margin-bottom: 15px;
   background-color: #ffffff;
-  padding: 10px;
+  padding: 1.5rem 2rem;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .group h3 {
+  margin-top: 5px;
   font-size: 18px;
   color: #333;
-  margin-bottom: 10px;
 }
 
 .group-members {
