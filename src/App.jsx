@@ -24,8 +24,8 @@ function App() {
           { field: 'email', operator: '==', value: 'joe@gmail.com' }
         ]
       })
-      setUserData(data)
-      
+      setUserData(data[0])
+
       fetchFirebaseDataById('users', 'test_joe')
       fetchFirebaseDataByReference('users', 'test_joe', 'affiliations', 'user')
       console.log('MBTI compatibility for ESTJ: ', getCompatibility('ESTJ'))
@@ -40,7 +40,7 @@ function App() {
       //   pronouns: "she/her",
       //   socials: {linkedin: 'linkedin_jamie', insta: 'ig_jamie', discord: 'jjames'},
       // })
-    })
+    })()
 
     const users = [
         ['userA', 'INFJ'],
@@ -58,7 +58,7 @@ function App() {
     <Router>
       <Nav />
       <Routes>
-        <Route exact path="/" element={<Home />} />
+        <Route exact path="/" element={<Home userData={userData} />} />
         <Route exact path="/auth" element={<Auth />} />
         <Route exact path="/hangout" element={<Hangout />} />
       </Routes>

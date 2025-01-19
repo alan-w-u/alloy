@@ -3,3 +3,10 @@
   height: 100%;
   align-items: center;
 }
+
+.loading {
+  width: fit-content;
+  font-size: 5rem;
+  font-weight: bold;
+  margin: 20rem auto;
+}
