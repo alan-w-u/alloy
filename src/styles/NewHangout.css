@@ -151,10 +151,10 @@ margin: 20rem auto;
   margin-bottom: 20px;
 }
 
-.cancel-btn {
+.new-hangout .create-btn {
   padding: 10px 20px;
-  background-color: white;
-  color: #913841;
+  background-color: #389160;
+  color: var(--seasalt);
   border: none;
   border-radius: 5px;
   font-size: 16px;
@@ -163,8 +163,16 @@ margin: 20rem auto;
   margin-bottom: 5px;
 }
 
-.cancel-btn:hover {
-  background-color: #e0e0e0;
+.new-hangout .cancel-btn {
+  padding: 10px 20px;
+  background-color: #913841;
+  color: var(--seasalt);
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 5px;
 }
 
 /* Groups Display Container */

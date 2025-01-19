@@ -9,7 +9,7 @@ function Home({ userData }) {
 
   return (
     <div className="home">
-      <NewHangout />
+      <NewHangout userData={userData} />
       <Profile userData={userData} />
     </div>
   )

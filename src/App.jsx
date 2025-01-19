@@ -30,7 +30,7 @@ function App() {
 
       const data = await fetchFirebaseData('users', {
         where: [
-          { field: 'email', operator: '==', value: 'joe@gmail.com' }
+          { field: 'name', operator: '==', value: 'Joe Doe' }
         ]
       })
       setUserData(data[0])

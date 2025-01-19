@@ -4,7 +4,7 @@ import { fetchFirebaseData, writeFirebaseData } from '../firebase/firebaseComman
 import { fetchGoogleApiData, fetchGoogleApiDataById } from '../googleApi'
 import '../styles/NewHangout.css'
 
-const NewHangout = () => {
+function NewHangout({ userData }) {
   const [isPopupVisible, setIsPopupVisible] = useState(false)
   const [isSuccessful, setIsSuccessful] = useState(false)
   const [selectedGroup, setSelectedGroup] = useState('ubc')
@@ -225,7 +225,7 @@ const NewHangout = () => {
                   <p>_________</p>
                   <ul className='group-members'>
                     {hangout.users.map((member, idx) => (
-                      <li key={idx} className='group-member'>
+                      <li key={idx} className='group-member' style={ member === userData.name? { fontWeight: 'bold', color: 'blue' } : {} }>
                         {member}
                       </li>
                     ))}
@@ -245,7 +245,7 @@ const NewHangout = () => {
       {isPopupVisible && (
         <div className='popup'>
           <div className='popup-content'>
-            <label htmlFor='groupSelect'>Select Group:</label>
+            <label htmlFor='groupSelect'>Select Group</label>
             <select
               id='groupSelect'
               value={selectedGroup}
@@ -257,7 +257,7 @@ const NewHangout = () => {
               <option value='workday'>workday</option>
             </select>
 
-            <label htmlFor='sizeSelect'>Select Size:</label>
+            <label htmlFor='sizeSelect'>Select Size</label>
             <select
               id='sizeSelect'
               value={selectedSize}
@@ -269,7 +269,7 @@ const NewHangout = () => {
               <option value='5'>5</option>
             </select>
 
-            <button onClick={handleSubmit}>Create</button>
+            <button className='create-btn' onClick={handleSubmit}>Create</button>
             <button className='cancel-btn' onClick={() => setIsPopupVisible(false)}>
               Cancel
             </button>

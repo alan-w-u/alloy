@@ -45,3 +45,53 @@
   margin: 2rem 0 0 0;
   align-items: center;
 }
+
+.profile .edit {
+  padding: 0.5rem 5rem;
+  margin: auto 0 0 0;
+  border-radius: 0.25rem;
+  background-color: var(--melon);
+  font-weight: bold;
+}
+
+.profile label {
+  color: var(--charcoal);
+}
+
+.profile input {
+  padding: 0 0.25rem;
+  margin: 0.25rem 0;
+  font-size: 1.25rem;
+}
+
+.profile .save-btn {
+  padding: 10px 20px;
+  background-color: #389160;
+  color: var(--seasalt);
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 5px;
+}
+
+.profile .save-btn:hover {
+  background-color: var(--charcoal) !important;
+}
+
+.profile .cancel-btn {
+  padding: 10px 20px;
+  background-color: #913841;
+  color: var(--seasalt);
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 5px;
+}
+
+.profile .cancel-btn:hover {
+  background-color: var(--charcoal) !important;
+}
