@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import {
   fetchFirebaseData,
@@ -15,25 +15,31 @@ import Hangout from './pages/Hangout'
 import './App.css'
 
 function App() {
+  const [userData, setUserData] = useState(null)
+
   useEffect(() => {
-    fetchFirebaseData('users', {
-      where: [
-        { field: 'name', operator: '==', value: 'Joe Doe' }
-      ]
-    })
-    fetchFirebaseDataById('users', 'test_joe')
-    fetchFirebaseDataByReference('users', 'test_joe', 'affiliations', 'user')
-    console.log('MBTI compatibility for ESTJ: ', getCompatibility('ESTJ'))
-    writeFirebaseData('users', {
-      age_range: 2,
-      city: "Toronto",
-      email: "jjames@gmail.com",
-      interests: ['skateboarding', 'running', 'poker'],
-      mbti: "intp",
-      name: "Jamie James",
-      password: "securepw123",
-      pronouns: "she/her",
-      socials: {linkedin: 'linkedin_jamie', insta: 'ig_jamie', discord: 'jjames'},
+    (async () => {
+      const data = await fetchFirebaseData('users', {
+        where: [
+          { field: 'email', operator: '==', value: 'joe@gmail.com' }
+        ]
+      })
+      setUserData(data)
+      
+      fetchFirebaseDataById('users', 'test_joe')
+      fetchFirebaseDataByReference('users', 'test_joe', 'affiliations', 'user')
+      console.log('MBTI compatibility for ESTJ: ', getCompatibility('ESTJ'))
+      // writeFirebaseData('users', {
+      //   age_range: 2,
+      //   city: "Toronto",
+      //   email: "jjames@gmail.com",
+      //   interests: ['skateboarding', 'running', 'poker'],
+      //   mbti: "intp",
+      //   name: "Jamie James",
+      //   password: "securepw123",
+      //   pronouns: "she/her",
+      //   socials: {linkedin: 'linkedin_jamie', insta: 'ig_jamie', discord: 'jjames'},
+      // })
     })
 
     const users = [
