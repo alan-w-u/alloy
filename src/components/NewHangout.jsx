@@ -9,6 +9,7 @@ const NewHangout = () => {
   const [selectedGroup, setSelectedGroup] = useState('ubc')
   const [selectedSize, setSelectedSize] = useState(2)
   const [groups, setGroups] = useState([])
+  const [hangouts, setHangouts] = useState([])
 
   const handleButtonClick = () => {
     setIsPopupVisible(!isPopupVisible)
@@ -22,7 +23,7 @@ const NewHangout = () => {
     setSelectedSize(Number(event.target.value))
   }
 
-  const extractNameAndMbti = (users) => {
+  const extractInfoFromUsers = (users) => {
     const result = [];
     for (let i = 0; i < users.length; i++) {
       const user = users[i][0];
@@ -33,7 +34,58 @@ const NewHangout = () => {
     }
     return result;
   };
-  
+
+//   const extractInterests = (interests) => {
+//     interestsArray = [];
+//     for (let i = 0; i < interests.length; i++) {
+//         interestsArray.push(interests.i)
+//     }
+//     return interestsArray
+//   }
+
+  const determineActivity = (userObjects) => {
+    const allInterests = [];
+
+    for (let i = 0; i < userObjects.length; i++) {
+        const user = userObjects[i][0];
+        if (user) {
+        //   const interestsArray = extractInterests(user.interests)
+          console.log('Extracting interests: ', user.interests);
+          allInterests.concat(user.interests); 
+        }
+    }
+
+    const interestCount = {};
+    console.log(allInterests)
+
+    allInterests.forEach((interest) => {
+      interestCount[interest] = (interestCount[interest] || 0) + 1;
+    });
+
+    let maxCount = 0;
+    let mostFrequentInterest = '';
+
+    for (const interest in interestCount) {
+      if (interestCount[interest] > maxCount) {
+        maxCount = interestCount[interest];
+        mostFrequentInterest = interest;
+      }
+    }
+
+    console.log("most frequent interest for ", userObjects)
+    console.log(mostFrequentInterest)
+
+    return mostFrequentInterest;
+  }
+
+  const createHangoutByGroup = (userObjects, group) => {
+    // this is now an array of userObjects
+    const mappedGroup = group.map((name) => {
+        const user = userObjects.find((user) => user.name === name);
+        return user;
+    });
+
+  }
 
   const parseInputToUsers = async (affiliationObjects) => {
     const result = []
@@ -65,12 +117,21 @@ const NewHangout = () => {
       const userObjects = await parseInputToUsers(affiliationObjects)
       console.log('Creating new group... User objects found: ', userObjects)
 
-      const users = extractNameAndMbti(userObjects)
+      const users = extractInfoFromUsers(userObjects)
       console.log('Creating new group... Users found: ', users)
 
       const groupedUsers = createGroupsByMbti(users, selectedSize)  
       setGroups(groups.concat(groupedUsers))
       console.log('Groups created: ', groupedUsers)
+
+    //   const newHangouts = []
+    //   for (let i = 0; i < groups.length; i++) {
+    //     const hangout = createHangoutByGroup(userObjects, groups[i])
+    //     newHangouts.push(hangout)
+    //   } 
+
+    determineActivity(userObjects)
+
       
     } catch (error) {
       console.error('Error fetching data or creating groups:', error)
