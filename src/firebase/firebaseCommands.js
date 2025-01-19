@@ -85,15 +85,33 @@ export async function writeFirebaseData(referenceTable, data) {
   }
 }
 
-export async function deleteFirebaseData(referenceTable, referenceId) {
+export async function deleteFirebaseData(referenceTable, customId) {
   try {
-    const docRef = doc(db, referenceTable, referenceId)
-    await deleteDoc(docRef)
+    const collectionRef = collection(db, referenceTable);
+    const querySnapshot = await getDocs(collectionRef);
 
-    console.log("Document deleted with ID: ", referenceId)
-    // return referenceId
+    console.log("Document is being deleted...");
+
+    for (const docSnapshot of querySnapshot.docs) {
+      const firestoreId = docSnapshot.id;
+      const currId = docSnapshot.data().id;
+
+      console.log("Firestore ID:", firestoreId);
+      console.log("Current ID:", currId);
+      console.log("Passed-in ID:", customId);
+
+      if (currId === customId) {
+        const docRef = doc(db, referenceTable, firestoreId);
+        console.log("Found the matching document! ", docRef);
+        await deleteDoc(docRef);
+        console.log("Document deleted successfully!");
+        return; 
+      }
+    }
+
+    console.log("No matching document found.");
   } catch (error) {
-    console.error("Error deleting data (deleteFirebaseData): ", error)
+    console.error("Error deleting data (deleteFirebaseData):", error);
   }
 }
 

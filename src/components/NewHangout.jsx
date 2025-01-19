@@ -24,8 +24,9 @@ const NewHangout = () => {
     setIsPopupVisible(!isPopupVisible)
   }
 
-  const handleDeleteButtonClick = (id) => {
-    deleteFirebaseData("hangouts", "id", id)
+  const handleDeleteButtonClick = async (id) => {
+    await deleteFirebaseData("hangouts", id)
+    setHangouts((updatedHangouts) => updatedHangouts.filter((hangout) => hangout.id !== id));
   }
 
   const handleGroupChange = (event) => {
@@ -120,7 +121,7 @@ const NewHangout = () => {
 
     const activity = determineActivity(userDataList)
     const actualActivity = await determineSpecificActivity(activity)
-    const actualActivityPhoto = actualActivity.photos[Math.floor(Math.random() * 10)].getUrl()
+    const actualActivityPhoto = actualActivity.photos[Math.floor(Math.random() * 8)].getUrl()
 
     console.log("actual activity: ", actualActivity)
 
@@ -247,7 +248,6 @@ const NewHangout = () => {
               value={selectedGroup}
               onChange={handleGroupChange}
             >
-              {/* TODO query values that user is admin to */}
               <option value='ubc'>ubc</option>
               <option value='nwPlus'>nwPlus</option>
               <option value='workday'>workday</option>
