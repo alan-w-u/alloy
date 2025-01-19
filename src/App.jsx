@@ -19,12 +19,12 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      const data = await fetchFirebaseData('affiliations', {
+      const data = await fetchFirebaseData('users', {
         where: [
-          { field: 'group', operator: '==', value: 'ubc' }
+          { field: 'email', operator: '==', value: 'joe@gmail.com' }
         ]
       })
-      setUserData(data)
+      setUserData(data[0])
 
       fetchFirebaseDataById('users', 'test_joe')
       fetchFirebaseDataByReference('users', 'test_joe', 'affiliations', 'user')
