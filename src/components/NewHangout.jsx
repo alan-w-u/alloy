@@ -111,11 +111,17 @@ const NewHangout = () => {
 
     console.log("actual activity: ", actualActivity)
 
-    // store in db
-    writeFirebaseData('hangouts', {
-        activity: actualActivity.place_id,
+    const hangout = {
+        id: actualActivity.place_id,
+        activity: actualActivity.name,
+        address: actualActivity.formatted_address,
+        rating: actualActivity.rating,
         users: group
-    })
+    }
+
+    writeFirebaseData('hangouts', hangout)
+
+    return hangout
   }
 
   const parseInputToUsers = async (affiliationObjects) => {
@@ -157,9 +163,14 @@ const NewHangout = () => {
 
       const newHangouts = []
       for (let i = 0; i < groupedUsers.length; i++) {
-        const hangout = createHangoutByGroup(userObjects, groupedUsers[i])
+        const hangout = await createHangoutByGroup(userObjects, groupedUsers[i])
         newHangouts.push(hangout)
       } 
+
+      console.log('hangouts existing: ', hangouts)
+      console.log('hangouts created: ', newHangouts)
+      
+      setHangouts(hangouts.concat(newHangouts))
       
     } catch (error) {
       console.error('Error fetching data or creating groups:', error)
@@ -172,16 +183,30 @@ const NewHangout = () => {
       }, 3000); 
   }
 
+  const fetchPhotoUrlFromId = (place_id) => {
+    const activity = fetchGoogleApiDataById(place_id)
+    const photo = actualActivity.photos[0]
+    return photo.getUrl
+  }
+
   return (
     <div className='new-hangout'>
       <div className='groups-container'>
       <h2>Upcoming hangouts</h2>
       <div className='groups-list'>
-        {groups.map((group, index) => (
+        {hangouts.map((hangout, index) => (
           <div key={index} className='group'>
-            <h3>{selectedGroup} {index + 1}</h3>
+            {/* <img
+                key={index}
+                src={fetchPhotoUrlFromId(hangout.id)} 
+                alt={`Photo of ${hangout.activity}`}
+                style={{ width: '300px', height: 'auto', margin: '10px' }} 
+              /> */}
+            <h2>{hangout.activity}</h2>
+            <p>{hangout.address}</p>
+            <p>_________</p>
             <ul className='group-members'>
-              {group.map((member, idx) => (
+              {hangout.users.map((member, idx) => (
                 <li key={idx} className='group-member'>
                   {member}
                 </li>
