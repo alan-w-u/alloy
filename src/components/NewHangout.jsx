@@ -35,14 +35,6 @@ const NewHangout = () => {
     return result;
   };
 
-//   const extractInterests = (interests) => {
-//     interestsArray = [];
-//     for (let i = 0; i < interests.length; i++) {
-//         interestsArray.push(interests.i)
-//     }
-//     return interestsArray
-//   }
-
   const determineActivity = (userObjects) => {
     const allInterests = []
 
@@ -52,9 +44,6 @@ const NewHangout = () => {
         for (let key in user.interests) {
           allInterests.push(user.interests[key])
         }
-      //   const interestsArray = extractInterests(user.interests)
-        // console.log('Extracting interests: ', user.interests);
-        // allInterests.concat(user.interests); 
       }
     }
 
@@ -77,19 +66,37 @@ const NewHangout = () => {
       }
     }
 
-    console.log("most frequent interest for ", userObjects)
+    console.log("most frequent interests for ", userObjects)
     console.log(mostFrequentInterest)
 
     return mostFrequentInterest;
   }
 
-  const createHangoutByGroup = (userObjects, group) => {
-    // this is now an array of userObjects
-    const mappedGroup = group.map((name) => {
-        const user = userObjects.find((user) => user.name === name);
-        return user;
-    });
+  const createHangoutByGroup = async (userObjects, group) => {
+    const mappedGroup = {}
+    const userList = []
+    const userDataList = []
+    for (let key in group) {
+        userList.push(group[key])
+    }
+    for (let i = 0; i < userList.length; i++) {
+        const userData = await fetchFirebaseData('users', {
+            where: [
+                { field: 'name', operator: '==', value: userList[i] }
+            ]
+        })
+        mappedGroup[userList[i]] = userData
+    }
+    for (let key in mappedGroup) {
+        userDataList.push(mappedGroup[key])
+    }
+    console.log('mappedGroup!!!!: ', mappedGroup)
+    console.log('userDataList!!!!: ', userDataList)
 
+
+    console.log("type of group ", typeof(group))
+    
+    determineActivity(userDataList)
   }
 
   const parseInputToUsers = async (affiliationObjects) => {
@@ -126,17 +133,15 @@ const NewHangout = () => {
       console.log('Creating new group... Users found: ', users)
 
       const groupedUsers = createGroupsByMbti(users, selectedSize)  
-      setGroups(groups.concat(groupedUsers))
+      setGroups(groups.concat(groupedUsers)) // this doesn't actually work bc groups is an object
+
       console.log('Groups created: ', groupedUsers)
 
-    //   const newHangouts = []
-    //   for (let i = 0; i < groups.length; i++) {
-    //     const hangout = createHangoutByGroup(userObjects, groups[i])
-    //     newHangouts.push(hangout)
-    //   } 
-
-    determineActivity(userObjects)
-
+      const newHangouts = []
+      for (let i = 0; i < groupedUsers.length; i++) {
+        const hangout = createHangoutByGroup(userObjects, groupedUsers[i])
+        newHangouts.push(hangout)
+      } 
       
     } catch (error) {
       console.error('Error fetching data or creating groups:', error)
