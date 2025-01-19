@@ -3,8 +3,8 @@
   flex-direction: column;
   width: 20rem;
   height: 45rem;
-  padding: 1rem;
-  margin: 0 1rem 0 auto;
+  padding: 1rem 3rem;
+  margin: 0 1rem 0 0;
   background-color: var(--moonstone);
   border-radius: 3rem;
   color: var(--seasalt);
@@ -20,4 +20,21 @@
   height: 10rem;
   background-color: var(--dim-grey);
   border-radius: 100%;
+  margin: 1rem 0;
+}
+
+.profile img {
+  width: 2rem;
+  height: 2rem;
+  margin: 0 1rem 0 0;
+}
+
+.profile .info {
+  width: 100%;
+  padding: 1rem 0;
+}
+
+.profile .info .cell {
+  display: flex;
+  margin: 0.5rem 0;
 }

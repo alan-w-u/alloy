@@ -1,6 +1,7 @@
-import React, { useState } from "react"
-import { createGroupsByMbti } from "../scripts/matcher"
-import { fetchFirebaseData, fetchFirebaseDataByReference } from "../firebase/firebaseCommands"
+import React, { useState } from 'react'
+import { createGroupsByMbti } from '../scripts/matcher'
+import { fetchFirebaseData, fetchFirebaseDataByReference } from '../firebase/firebaseCommands'
+import '../styles/NewHangout.css'
 
 const NewHangout = () => {
   const [isPopupVisible, setIsPopupVisible] = useState(false)
@@ -26,7 +27,7 @@ const NewHangout = () => {
     for (let i = 0; i < users.length; i++) {
       const user = users[i][0];
       if (user) {
-        console.log("Extracting info: ", user.name, user.mbti);
+        console.log('Extracting info: ', user.name, user.mbti);
         result.push([user.name, user.mbti]); 
       }
     }
@@ -47,7 +48,7 @@ const NewHangout = () => {
             result.push(user)
           }
     } catch (error) {
-        console.error("Error fetching data or parsing users:", error)
+        console.error('Error fetching data or parsing users:', error)
     }
     return result
   }
@@ -59,20 +60,20 @@ const NewHangout = () => {
           { field: 'group', operator: '==', value: selectedGroup }
         ]
       })
-      console.log("Creating new group... Affiliation objects found: ", affiliationObjects)
+      console.log('Creating new group... Affiliation objects found: ', affiliationObjects)
 
       const userObjects = await parseInputToUsers(affiliationObjects)
-      console.log("Creating new group... User objects found: ", userObjects)
+      console.log('Creating new group... User objects found: ', userObjects)
 
       const users = extractNameAndMbti(userObjects)
-      console.log("Creating new group... Users found: ", users)
+      console.log('Creating new group... Users found: ', users)
 
       const groupedUsers = createGroupsByMbti(users, selectedSize)  
       setGroups(groups.concat(groupedUsers))
-      console.log("Groups created: ", groupedUsers)
+      console.log('Groups created: ', groupedUsers)
       
     } catch (error) {
-      console.error("Error fetching data or creating groups:", error)
+      console.error('Error fetching data or creating groups:', error)
     }
 
     setIsPopupVisible(false)
@@ -83,16 +84,16 @@ const NewHangout = () => {
   }
 
   return (
-    <div className="main-hangout-container">
-      <div className="groups-container">
+    <div className='new-hangout'>
+      <div className='groups-container'>
       <h2>Upcoming hangouts</h2>
-      <div className="groups-list">
+      <div className='groups-list'>
         {groups.map((group, index) => (
-          <div key={index} className="group">
+          <div key={index} className='group'>
             <h3>{selectedGroup} {index + 1}</h3>
-            <ul className="group-members">
+            <ul className='group-members'>
               {group.map((member, idx) => (
-                <li key={idx} className="group-member">
+                <li key={idx} className='group-member'>
                   {member}
                 </li>
               ))}
@@ -102,39 +103,39 @@ const NewHangout = () => {
       </div>
     </div>
         
-    <button className="create-button" onClick={handleButtonClick}>
+    <button className='create-button' onClick={handleButtonClick}>
     Create New Hangout
     </button>
 
     {isPopupVisible && (
-        <div className="popup">
-          <div className="popup-content">
-            <label htmlFor="groupSelect">Select Group:</label>
+        <div className='popup'>
+          <div className='popup-content'>
+            <label htmlFor='groupSelect'>Select Group:</label>
             <select
-              id="groupSelect"
+              id='groupSelect'
               value={selectedGroup}
               onChange={handleGroupChange}
             >
                 {/* TODO query values that user is admin to */}
-              <option value="ubc">ubc</option> 
-              <option value="nwPlus">nwPlus</option>
-              <option value="workday">workday</option>
+              <option value='ubc'>ubc</option> 
+              <option value='nwPlus'>nwPlus</option>
+              <option value='workday'>workday</option>
             </select>
 
-            <label htmlFor="sizeSelect">Select Size:</label>
+            <label htmlFor='sizeSelect'>Select Size:</label>
             <select
-              id="sizeSelect"
+              id='sizeSelect'
               value={selectedSize}
               onChange={handleSizeChange}
             >
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
+              <option value='2'>2</option>
+              <option value='3'>3</option>
+              <option value='4'>4</option>
+              <option value='5'>5</option>
             </select>
 
             <button onClick={handleSubmit}>Create</button>
-            <button className="cancel-btn" onClick={() => setIsPopupVisible(false)}>
+            <button className='cancel-btn' onClick={() => setIsPopupVisible(false)}>
               Cancel
             </button>
           </div>
@@ -143,22 +144,22 @@ const NewHangout = () => {
 
     {/* Success Popup */}
     {isSuccessful && (
-        <div className="success-popup">
-          <div className="success-popup-content">
-            <div className="popup-icon">
+        <div className='success-popup'>
+          <div className='success-popup-content'>
+            <div className='popup-icon'>
               <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="50"
-                height="50"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="check-icon"
+                xmlns='http://www.w3.org/2000/svg'
+                width='50'
+                height='50'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='2'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                className='check-icon'
               >
-                <path d="M20 6L9 17l-5-5"></path>
+                <path d='M20 6L9 17l-5-5'></path>
               </svg>
             </div>
             <h3>Success!</h3>

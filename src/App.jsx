@@ -21,7 +21,7 @@ function App() {
   useEffect(() => {
     (async () => {
       // if (window.google) {
-      //   fetchGoogleApiData('golf')
+      //   fetchGoogleApiData('bowling')
       // }
 
       const data = await fetchFirebaseData('users', {

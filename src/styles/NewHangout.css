@@ -1,0 +1,211 @@
+
+.new-hangout {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
+
+.new-hangout button {
+  margin: 10px;
+  padding: 10px 20px;
+  background-color: var(--charcoal);
+  color: var(--seasalt);
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.new-hangout button:hover {
+  background-color: black;
+}
+
+.create-button {
+  margin-top: 50px;
+  margin-left: 25vw;
+}
+
+label {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  text-align: left;
+  display: block;
+}
+
+select {
+  margin: 10px 0;
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 25px;
+}
+
+/* Pop-up Styling */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.popup-content {
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  width: 300px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  animation: slideIn 0.5s ease-in-out;
+}
+
+.loading {
+width: fit-content;
+font-size: 5rem;
+font-weight: bold;
+margin: 20rem auto;
+}
+
+.success-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.success-popup-content {
+  background-color: #58A4B0;
+  color: white;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  width: 350px;
+  max-width: 90%;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+  animation: slideIn 0.5s ease-in-out;
+}
+
+.popup-icon {
+  background-color: white;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.check-icon {
+  stroke: #4caf50;
+  width: 30px;
+  height: 30px;
+}
+
+.success-popup h3 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.success-popup p {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.cancel-btn {
+  padding: 10px 20px;
+  background-color: white;
+  color: #913841;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 5px;
+}
+
+.cancel-btn:hover {
+  background-color: #e0e0e0;
+}
+
+/* Groups Display Container */
+.groups-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Group List Styling */
+.groups-list {
+  margin-top: 20px;
+}
+
+.group {
+  margin-bottom: 15px;
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.group h3 {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.group-members {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.group-member {
+  font-size: 16px;
+  color: #555;
+  margin: 5px 0;
+}
+
+/* Optional: Styling for Hover Effects */
+.group-member:hover {
+  color: #3498db;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateY(-50px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
